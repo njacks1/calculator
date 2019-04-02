@@ -22,14 +22,21 @@ void posButton(double const diameter, double const gapBut1, double const gapBut2
 	}
 }
 
-void whichButton(int click_x, int click_y, double const gapBut1, double const gapBut2, double const diameter, double const x, double const y){		//make a if else for parameters of the diameter of a circle at given starting points and then check if within the circle
-	for (int ii = 0; ii < 4; ii++){
-		for (int i = 0; i < 5; i++){
-			if ((click_x - (x + (i*gapBut1))) ^ 2 + (click_y - (y + (ii*gapBut2)) ^ 2 == 1156)){
-
-			}
-		}
-	}
+int whichButton(int click_x, int click_y, double const gapBut1, double const gapBut2, double const diameter, double const x, double const y){		//make a if else for parameters of the diameter of a circle at given starting points and then check if within the circle
+  int iii = 0;
+  int stopper = 0;
+  while(stopper==0){
+    for (int ii = 0; ii < 4; ii++){
+  		for (int i = 0; i < 5; i++){
+  			if (x_click<=(x+(diameter/2)+(i*gapBut1)) && x_click>=(x-(diameter/2)+(i*gapBut1)) && y_click>=(y+(diameter/2)+(ii*gapBut2)) && y_click<=(y-(diameter/2)+(ii*gapBut2))){
+            return(iii);
+            stopper++;
+  			}
+        else
+        iii++;
+  		}
+  	}
+  }
 }
 
 void clickCoords(double const gapBut1, double const gapBut2, double const diameter, double const x, double const y){
