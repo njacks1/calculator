@@ -1,5 +1,9 @@
 #include "library.h"
 
+double acc1 = 0;
+double acc2 = 0;
+double op = 0;
+
 void drawButton(double const diameter){
 	set_pen_color(0);
 	set_pen_width(diameter);
@@ -21,25 +25,7 @@ void posButton(double const diameter, double const gapBut1, double const gapBut2
 		}
 	}
 }
-/*
-int whichButton(int click_x, int click_y, double const gapBut1, double const gapBut2, double const diameter, double const x, double const y){		//make a if else for parameters of the diameter of a circle at given starting points and then check if within the circle
-	int iii = 0;
-	int stopper = 0;
-	while (stopper == 0){
-		for (int ii = 0; ii < 4; ii++){
-			for (int i = 0; i < 5; i++){
-				if (click_x <= (x + (diameter / 2) + (i*gapBut1)) && click_x >= (x - (diameter / 2) + (i*gapBut1)) && click_y >= (y + (diameter / 2) + (ii*gapBut2)) && click_y <= (y - (diameter / 2) + (ii*gapBut2))){
-					return(iii);
-					stopper++;
-				}
-				else
-					iii++;
-			}
-		}
-		stopper++;
-	}
-}
-*/
+
 int whichButton(int click_x, int click_y, double const gapBut1, double const gapBut2, double const radius, double const x, double const y){
 	if (click_x <= x + 0 * gapBut1 + radius && click_x >= x + 0 * gapBut1 - radius && click_y >= y - radius + 0 * gapBut2 && click_y <= y + radius + 0 * gapBut2){
 		return(7);
@@ -104,14 +90,37 @@ int whichButton(int click_x, int click_y, double const gapBut1, double const gap
 	else return(100);
 }
 
+void processClick(){
+	if(whichButton(click_x, click_y, gapBut1, gapBut2, radius, x, y)<10){
+		acc2 = (acc2 * 10) + acc1;
+		acc1 = whichButton(click_x, click_y, gapBut1, gapBut2, radius, x, y);
+		cout << (acc2 * 10) + acc1 << endl;		//should be the write_string
+	}
+	else if(whichButton(click_x, click_y, gapBut1, gapBut2, radius, x, y)>=10 && whichButton(click_x, click_y, gapBut1, gapBut2, radius, x, y)<17){
+		double acc3 = (acc2 * 10) + acc1;
+		op = whichButton(click_x, click_y, gapBut1, gapBut2, radius, x, y);
+	}
+	else if(whichButton(click_x, click_y, gapBut1, gapBut2, radius, x, y)==17){
+		//plus/minus and power
+	}
+	else if(whichButton(click_x, click_y, gapBut1, gapBut2, radius, x, y)==18){
+		
+	}
+	else //clear function
+}
+
 void clickCoords(double const gapBut1, double const gapBut2, double const diameter, double const x, double const y){
 	while (true){
 		double const radius = diameter / 2;
 		wait_for_mouse_click();
+		//acc2 = (acc2 * 10) + acc1;							//this sets acc2 to be whatever acc1 was before the new mouseclick
 		int click_x = get_click_x();
 		int click_y = get_click_y();
-		cout << whichButton(click_x, click_y, gapBut1, gapBut2, radius, x, y) << endl;
-		cout << "X-CLICK: " << click_x << "  Y-CLICK: " << click_y << endl;
+		processClick();
+		//cout << whichButton(click_x, click_y, gapBut1, gapBut2, radius, x, y) << endl;
+		//cout << "X-CLICK: " << click_x << "  Y-CLICK: " << click_y << endl;
+		//acc1 = whichButton(click_x, click_y, gapBut1, gapBut2, radius, x, y);				//attains the new value for acc1
+		//cout << (acc2 * 10) + acc1 << endl;
 
 	}
 }
